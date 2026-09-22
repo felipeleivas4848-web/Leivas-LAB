@@ -1035,6 +1035,7 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
     {id:'nome',q:'Pra finalizar: qual é o seu nome?',type:'text',ph:'Seu nome',ac:'given-name'},
     {id:'empresa',q:'Prazer, {nome}! E o nome da empresa?',type:'text',ph:'Nome da empresa',ac:'organization'},
     {id:'instagram',q:'Qual é o @ da empresa no Instagram?',sub:'Se ainda não tiver, é só deixar em branco.',type:'text',ph:'@suaempresa',optional:true},
+    {id:'email',q:'Qual é o seu melhor e-mail?',type:'email',ph:'voce@email.com',ac:'email'},
     {id:'whatsapp',q:'Qual é o seu WhatsApp?',sub:'É por ele que a Gabi vai falar com você. Depois marcamos uma conversa presencial.',type:'tel',ph:'(51) 90000-0000',ac:'tel'}
   ];
   /* pontuação interna (não aparece para o lead) */
@@ -1066,7 +1067,7 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
       if(q.other)h+='<div class="fld qz-other"'+(A[q.id]===q.other?'':' hidden')+'><input name="'+q.id+'_outra" placeholder="'+esc(q.otherPh)+'" value="'+esc(A[q.id+'_outra']||'')+'"></div>';
       if(q.id==='cidade')h+='<p class="qz-note" id="qzFora" hidden>Por enquanto a captação presencial é em '+esc(ATENDE.join(', '))+'. Pode continuar: você entra na nossa lista e a gente te chama quando chegar na sua cidade.</p>';
     }else{
-      h+='<div class="fld"><input name="'+q.id+'" type="'+(q.type==='tel'?'tel':'text')+'"'+(q.type==='tel'?' inputmode="tel"':'')+(q.ac?' autocomplete="'+q.ac+'"':'')+' placeholder="'+esc(q.ph)+'" value="'+esc(A[q.id]||'')+'" aria-labelledby="qzQ"></div>';
+      h+='<div class="fld"><input name="'+q.id+'" type="'+(q.type||'text')+'"'+(q.type==='tel'?' inputmode="tel"':q.type==='email'?' inputmode="email" autocapitalize="off" spellcheck="false"':'')+(q.ac?' autocomplete="'+q.ac+'"':'')+' placeholder="'+esc(q.ph)+'" value="'+esc(A[q.id]||'')+'" aria-labelledby="qzQ"></div>';
     }
     var last=i===Q.length-1;
     h+='<div class="qz-act"><button class="btn btn-rose" type="submit">'+(last?'Quero entrar no Lab':'Continuar')+' <svg class="sp use" viewBox="0 0 2 2" aria-hidden="true"><use href="#spark"/></svg></button>';
@@ -1097,6 +1098,7 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
     if(q.opts&&!q.multi&&!v)return 'Escolha uma opção para continuar.';
     if(q.other&&v===q.other&&!A[q.id+'_outra'])return 'Conta pra gente qual é.';
     if(!q.opts&&!q.optional&&v.length<2)return 'Preencha para continuar.';
+    if(q.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))return 'Confira o e-mail, ex.: voce@email.com.';
     if(q.type==='tel'){var d=v.replace(/\D/g,'');if(d.length<10||d.length>13)return 'Coloque o WhatsApp com DDD, ex.: (51) 99999-9999.'}
     return '';
   }
@@ -1150,7 +1152,7 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
     var ig=A.instagram?(A.instagram.charAt(0)==='@'?A.instagram:'@'+A.instagram):'não tem';
     var seg=A.segmento==='Outro'?A.segmento_outra:A.segmento;
     var msg='Olá! Vim pela página da Leivas Lab e quero conversar.\n\n'+
-      '*Nome:* '+A.nome+'\n*Empresa:* '+A.empresa+' ('+seg+')\n*Cidade:* '+cidade()+'\n*Instagram:* '+ig+'\n*WhatsApp:* '+A.whatsapp+'\n\n'+
+      '*Nome:* '+A.nome+'\n*Empresa:* '+A.empresa+' ('+seg+')\n*Cidade:* '+cidade()+'\n*Instagram:* '+ig+'\n*WhatsApp:* '+A.whatsapp+'\n*E-mail:* '+A.email+'\n\n'+
       '*Espaço para gravar:* '+A.espaco+'\n*Tempo de empresa:* '+A.tempo+'\n*Equipe:* '+A.equipe+'\n'+
       '*Instagram hoje:* '+A.insta+'\n*Quem cuida:* '+A.quem+'\n*Objetivo:* '+A.objetivo.join(', ')+'\n*Aparecer nos vídeos:* '+A.aparecer+'\n\n'+
       '*Plano de interesse:* '+A.plano+'\n*Quem decide:* '+A.decisor+'\n*Quando começar:* '+A.quando+'\n\nRef. '+tier+s+(u.utm_campaign?' · '+u.utm_campaign:'');
