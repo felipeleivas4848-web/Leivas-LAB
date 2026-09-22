@@ -565,6 +565,40 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
 .faq details[open] p{animation:faqIn .55s cubic-bezier(.2,.8,.2,1)}
 @keyframes faqIn{from{opacity:0;transform:translateY(-10px)}}
 @media(prefers-reduced-motion:reduce){.mq-t{animation:none}}
+/* ===== v5 · formulário em etapas ===== */
+.quiz{max-width:760px;display:grid;gap:16px;margin-top:6px}
+.qz-top{display:flex;justify-content:space-between;align-items:center;gap:16px;color:var(--on-olive-2);min-height:40px}
+.qz-top b{color:var(--rose);font-weight:500}
+.qz-back{background:none;border:0;color:var(--on-olive-2);cursor:pointer;padding:8px 0;min-height:40px}
+.qz-back:hover{color:var(--rose)}
+.qz-back[hidden]{display:none}
+.qz-bar{height:3px;background:var(--hair-l);overflow:hidden}
+.qz-bar i{display:block;height:100%;width:0;background:var(--rose);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.qz-stage{min-height:360px;padding-top:14px}
+.qz-step{display:grid;gap:18px;animation:qzIn .55s cubic-bezier(.2,.8,.2,1)}
+.qz-step.back{animation-name:qzBack}
+.qz-step.out{opacity:0;transform:translateY(-16px);transition:opacity .22s,transform .22s}
+@keyframes qzIn{from{opacity:0;transform:translateY(26px)}}
+@keyframes qzBack{from{opacity:0;transform:translateY(-26px)}}
+.qz-q{font-family:var(--serif);font-weight:500;font-variation-settings:"opsz" 6;font-size:clamp(26px,3.4vw,40px);line-height:1.12;text-wrap:balance}
+.qz-q:focus{outline:0}
+.qz-sub{color:var(--on-olive);font-weight:300;margin-top:-8px}
+.quiz .opt span::before{display:none}
+.quiz .opt span{gap:14px;text-align:left;line-height:1.3}
+.quiz .opt input[type=checkbox]:checked+span kbd::after{content:" ✓"}
+.quiz kbd{flex:none;font:500 11px var(--mono);letter-spacing:.08em;border:1px solid var(--hair-l);padding:3px 7px;min-width:26px;text-align:center}
+.quiz .opt input:checked+span kbd{border-color:rgba(32,33,30,.35)}
+.qz-other[hidden]{display:none}
+.qz-note{border-left:2px solid var(--rose);padding:12px 16px;background:rgba(47,55,42,.4);color:var(--on-olive);font-size:16px}
+.qz-note[hidden]{display:none}
+.qz-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.qz-act .btn{min-width:200px}
+.qz-err{color:var(--rose);min-height:1.4em;font-size:15px}
+.qz-hint{color:var(--on-olive-2)}
+@media(hover:none){.qz-hint{display:none}}
+.ok p+p{margin-top:12px}
+.ok .tag{color:var(--on-olive-2);font-family:var(--mono);font-size:11.5px;font-weight:400}
+
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
@@ -869,40 +903,13 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
   <div class="wrap in">
     <span class="tag" style="color:var(--rose)">Próxima amostra / Guaíba e região</span>
     <h2 class="serif">Vamos tirar o conteúdo das suas <em>costas?</em></h2>
-    <p class="s">Responda em um minuto. Você chega na conversa já sabendo o que fazemos, quanto custa e qual plano provavelmente combina com a sua empresa.</p>
-    <form class="form" id="lead" novalidate>
-      <div class="row2">
-        <div class="fld"><label for="f-nome">Nome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
-        <div class="fld"><label for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization" required></div>
-      </div>
-      <div class="row2">
-        <div class="fld"><label for="f-wa">WhatsApp</label><input id="f-wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(51) 90000-0000" required></div>
-        <div class="fld"><label for="f-ig">Instagram da empresa</label><input id="f-ig" name="instagram" placeholder="@suaempresa" required></div>
-      </div>
-      <div class="row2">
-        <div class="fld"><label for="f-seg">Segmento</label><input id="f-seg" name="segmento" list="segs" placeholder="Ex.: loja, clínica, oficina" required><datalist id="segs"><option value="Loja"><option value="Clínica"><option value="Oficina / automotivo"><option value="Restaurante"><option value="Estética"><option value="Imobiliária"><option value="Academia"><option value="Profissional autônomo"><option value="Prestador de serviços"></datalist></div>
-        <div class="fld"><label for="f-cid">Cidade</label><input id="f-cid" name="cidade" value="Guaíba" required></div>
-      </div>
-      <fieldset><legend>Qual plano faz mais sentido para sua empresa?</legend>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="plano" value="Presença — R$ 997/mês"><span>Presença — R$ 997/mês</span></label>
-          <label class="opt"><input type="radio" name="plano" value="Constância — R$ 1.497/mês" checked><span>Constância — R$ 1.497/mês</span></label>
-          <label class="opt"><input type="radio" name="plano" value="Referência — R$ 2.497/mês"><span>Referência — R$ 2.497/mês</span></label>
-          <label class="opt"><input type="radio" name="plano" value="Quero ajuda para escolher"><span>Quero ajuda para escolher</span></label>
-        </div>
-      </fieldset>
-      <fieldset><legend>Quando gostaria de começar?</legend>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="quando" value="O quanto antes" checked><span>O quanto antes</span></label>
-          <label class="opt"><input type="radio" name="quando" value="Ainda este mês"><span>Ainda este mês</span></label>
-          <label class="opt"><input type="radio" name="quando" value="Próximo mês"><span>Próximo mês</span></label>
-          <label class="opt"><input type="radio" name="quando" value="Estou apenas pesquisando"><span>Estou apenas pesquisando</span></label>
-        </div>
-      </fieldset>
-      <div><button class="btn btn-rose" type="submit" style="width:100%;max-width:340px">Quero entrar no Lab <svg class="sp" viewBox="0 0 2 2" aria-hidden="true"><use href="#spark"/></svg></button></div>
-      <p class="after tag">Depois marcamos uma conversa presencial, fechamos e já organizamos a primeira captação.</p>
-    </form>
-    <div class="ok" id="ok" role="status"><p>Recebido. Vamos falar com você em breve.</p></div>
+    <p class="s">Leva uns 2 minutos, uma pergunta por vez. Assim a gente entende a sua empresa e chega na conversa já sabendo como ajudar.</p>
+    <div class="quiz" id="quiz">
+      <div class="qz-top tag"><span id="qzN"></span><button type="button" class="qz-back tag" id="qzBack" hidden>← Voltar</button></div>
+      <div class="qz-bar" aria-hidden="true"><i id="qzBar"></i></div>
+      <form class="qz-stage" id="qzForm" novalidate></form>
+    </div>
+    <div class="ok" id="ok" role="status"><p id="okMsg"></p><p class="tag"><span id="okSub"></span><a id="okLink" hidden target="_blank" rel="noopener" style="color:var(--rose)">abrir WhatsApp</a></p></div>
   </div>
 </section>
 </main>
@@ -931,7 +938,13 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
 <script>
 (function(){
   /* ====== CONFIGURAÇÃO DE CONTATO — preencha aqui ====== */
-  var CFG={whatsapp:"",instagram:"",email:""};
+  var CFG=window.LEIVAS={
+    whatsapp:"",            /* ex.: "5551999999999" */
+    instagram:"",
+    email:"",
+    webhook:"",             /* opcional: URL do N8N/Kommo que recebe os leads */
+    cidadesAtendidas:["Guaíba"] /* adicione cidades aqui conforme expandir */
+  };
   /* ==================================================== */
   var $=function(s,c){return (c||document).querySelector(s)},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -998,29 +1011,169 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
     });
   }
 
-  /* botões dos planos pré-selecionam o plano no formulário */
-  var map={presenca:'Presença — R$ 997/mês',constancia:'Constância — R$ 1.497/mês',referencia:'Referência — R$ 2.497/mês'};
-  $$('[data-plan]').forEach(function(a){a.addEventListener('click',function(){
-    var v=map[a.getAttribute('data-plan')];$$('input[name=plano]').forEach(function(i){i.checked=(i.value===v)});
-  })});
-
-  /* formulário: monta a mensagem e abre o WhatsApp */
-  var form=$('#lead'),ok=$('#ok');
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    var bad=null;$$('input[required]',form).forEach(function(i){if(!i.value.trim()&&!bad)bad=i});
-    if(bad){bad.focus();say('Preencha todos os campos para continuar.');return}
-    var d=function(n){var el=form.elements[n];return el&&el.value?el.value.trim():''};
-    var msg='Olá! Vim pela página da Leivas Lab e quero conversar.\n\n'+
-      'Nome: '+d('nome')+'\nEmpresa: '+d('empresa')+'\nWhatsApp: '+d('whatsapp')+'\nInstagram: '+d('instagram')+
-      '\nSegmento: '+d('segmento')+'\nCidade: '+d('cidade')+'\nPlano de interesse: '+d('plano')+'\nQuando começar: '+d('quando');
-    if(!waNum){say('Envio ainda não configurado: falta o número do WhatsApp da Leivas Lab.');return}
-    window.open('https://wa.me/'+waNum+'?text='+encodeURIComponent(msg),'_blank','noopener');
-    form.hidden=true;ok.classList.add('on');
-  });
 })();
 </script>
 
+<script>
+/* ===== v5 · formulário em etapas (uma pergunta por vez) ===== */
+(function(){
+  var CFG=window.LEIVAS||{};
+  var ATENDE=CFG.cidadesAtendidas||['Guaíba'];
+  var Q=[
+    {id:'cidade',q:'Em qual cidade fica a sua empresa?',sub:'Nosso trabalho é presencial: a gente vai até você.',opts:['Guaíba','Eldorado do Sul','Barra do Ribeiro','Porto Alegre','Outra cidade'],other:'Outra cidade',otherPh:'Qual cidade?'},
+    {id:'espaco',q:'Sua empresa tem um espaço físico onde a gente possa gravar?',opts:['Sim, aberto ao público (loja, clínica, escritório…)','Sim, com atendimento com hora marcada','Não, atendo na casa do cliente ou online']},
+    {id:'segmento',q:'Qual é o segmento da empresa?',opts:['Loja / varejo','Saúde e estética','Alimentação','Automotivo','Imobiliária / construção','Academia / bem-estar','Prestação de serviços','Outro'],other:'Outro',otherPh:'Qual segmento?'},
+    {id:'tempo',q:'Há quanto tempo a empresa existe?',opts:['Menos de 1 ano','De 1 a 3 anos','De 3 a 10 anos','Mais de 10 anos']},
+    {id:'equipe',q:'Quantas pessoas trabalham na empresa?',opts:['Só eu','De 2 a 5','De 6 a 15','Mais de 15']},
+    {id:'insta',q:'Como está o Instagram da empresa hoje?',opts:['Parado, quase não posto','Posto de vez em quando, sem planejamento','Posto com frequência, mas não gosto do resultado','Ainda não temos Instagram']},
+    {id:'quem',q:'Quem cuida do Instagram hoje?',opts:['Eu mesmo(a)','Alguém da equipe','Uma agência ou freelancer','Ninguém']},
+    {id:'objetivo',q:'O que você mais quer com o conteúdo?',sub:'Pode marcar mais de uma.',multi:true,opts:['Ser mais lembrado na cidade','Passar mais profissionalismo','Mostrar produtos e serviços','Atrair novos clientes','Valorizar o preço que cobro']},
+    {id:'aparecer',q:'Você ou sua equipe topam aparecer nos vídeos?',opts:['Sim, tranquilo','Sim, com orientação','Prefiro mostrar só produto e ambiente']},
+    {id:'plano',q:'Qual plano faz mais sentido para a sua empresa hoje?',opts:['Presença — R$ 997/mês','Constância — R$ 1.497/mês','Referência — R$ 2.497/mês','Quero ajuda para escolher','Ainda não tenho esse investimento disponível']},
+    {id:'decisor',q:'Quem decide a contratação?',opts:['Eu decido','Decido junto com sócio(a)','Outra pessoa decide']},
+    {id:'quando',q:'Quando gostaria de começar?',opts:['O quanto antes','Ainda este mês','No próximo mês','Estou só pesquisando']},
+    {id:'nome',q:'Pra finalizar: qual é o seu nome?',type:'text',ph:'Seu nome',ac:'given-name'},
+    {id:'empresa',q:'Prazer, {nome}! E o nome da empresa?',type:'text',ph:'Nome da empresa',ac:'organization'},
+    {id:'instagram',q:'Qual é o @ da empresa no Instagram?',sub:'Se ainda não tiver, é só deixar em branco.',type:'text',ph:'@suaempresa',optional:true},
+    {id:'whatsapp',q:'Qual é o seu WhatsApp?',sub:'É por ele que a Gabi vai falar com você. Depois marcamos uma conversa presencial.',type:'tel',ph:'(51) 90000-0000',ac:'tel'}
+  ];
+  /* pontuação interna (não aparece para o lead) */
+  var PTS={
+    cidade:{'Guaíba':4,'Eldorado do Sul':3,'Barra do Ribeiro':3,'Porto Alegre':1},
+    espaco:[2,1,0],tempo:[0,1,2,2],equipe:[0,1,2,2],plano:[2,3,3,1,-4],decisor:[2,1,0],quando:[3,2,1,0]
+  };
+
+  var form=document.getElementById('qzForm'),bar=document.getElementById('qzBar'),num=document.getElementById('qzN'),
+      backB=document.getElementById('qzBack'),quiz=document.getElementById('quiz'),ok=document.getElementById('ok'),toast=document.getElementById('toast');
+  var A={},i=0,busy=false,first=true,LET='ABCDEFGH';
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(say.t);say.t=setTimeout(function(){toast.classList.remove('on')},3600)}
+  function pad(n){return ('0'+n).slice(-2)}
+  function fora(){var c=A.cidade==='Outra cidade'?A.cidade_outra:A.cidade;return !!c&&ATENDE.indexOf(c)<0}
+  function cidade(){return A.cidade==='Outra cidade'?(A.cidade_outra||'Outra'):A.cidade}
+
+  function render(back){
+    var q=Q[i],h='<div class="qz-step'+(back?' back':'')+'" role="group" aria-labelledby="qzQ">';
+    h+='<p class="qz-q" id="qzQ" tabindex="-1">'+esc(q.q.replace('{nome}',(A.nome||'').split(' ')[0]))+'</p>';
+    if(q.sub)h+='<p class="qz-sub">'+esc(q.sub)+'</p>';
+    if(q.opts){
+      h+='<div class="opts">';
+      q.opts.forEach(function(o,k){
+        var on=q.multi?(A[q.id]||[]).indexOf(o)>=0:A[q.id]===o;
+        h+='<label class="opt"><input type="'+(q.multi?'checkbox':'radio')+'" name="'+q.id+'" value="'+esc(o)+'"'+(on?' checked':'')+'><span><kbd>'+LET[k]+'</kbd>'+esc(o)+'</span></label>';
+      });
+      h+='</div>';
+      if(q.other)h+='<div class="fld qz-other"'+(A[q.id]===q.other?'':' hidden')+'><input name="'+q.id+'_outra" placeholder="'+esc(q.otherPh)+'" value="'+esc(A[q.id+'_outra']||'')+'"></div>';
+      if(q.id==='cidade')h+='<p class="qz-note" id="qzFora" hidden>Por enquanto a captação presencial é em '+esc(ATENDE.join(', '))+'. Pode continuar: você entra na nossa lista e a gente te chama quando chegar na sua cidade.</p>';
+    }else{
+      h+='<div class="fld"><input name="'+q.id+'" type="'+(q.type==='tel'?'tel':'text')+'"'+(q.type==='tel'?' inputmode="tel"':'')+(q.ac?' autocomplete="'+q.ac+'"':'')+' placeholder="'+esc(q.ph)+'" value="'+esc(A[q.id]||'')+'" aria-labelledby="qzQ"></div>';
+    }
+    var last=i===Q.length-1;
+    h+='<div class="qz-act"><button class="btn btn-rose" type="submit">'+(last?'Quero entrar no Lab':'Continuar')+' <svg class="sp use" viewBox="0 0 2 2" aria-hidden="true"><use href="#spark"/></svg></button>';
+    h+='<span class="qz-hint tag">'+(q.opts?'Tecle a letra ou clique':'Enter ↵ para continuar')+'</span></div>';
+    h+='<p class="qz-err" role="alert"></p></div>';
+    form.innerHTML=h;
+    bar.style.width=(i/Q.length*100)+'%';
+    num.innerHTML='<b>'+pad(i+1)+'</b> / '+pad(Q.length);
+    backB.hidden=i===0;
+    if(q.id==='cidade')note();
+    var inp=form.querySelector('.fld:not([hidden]) input');
+    if(first){first=false;return}
+    var r=quiz.getBoundingClientRect();if(r.top<0||r.top>innerHeight*.6)quiz.scrollIntoView({behavior:'smooth',block:'start'});
+    if(inp&&!q.opts&&matchMedia('(hover:hover)').matches)inp.focus({preventScroll:true});else form.querySelector('.qz-q').focus({preventScroll:true});
+  }
+  function note(){var n=document.getElementById('qzFora');if(n)n.hidden=!fora()}
+
+  function read(){
+    var q=Q[i];
+    if(q.multi){A[q.id]=[].map.call(form.querySelectorAll('input[name='+q.id+']:checked'),function(x){return x.value})}
+    else if(q.opts){var c=form.querySelector('input[name='+q.id+']:checked');A[q.id]=c?c.value:''}
+    else{A[q.id]=form.elements[q.id].value.trim()}
+    if(q.other){var o=form.elements[q.id+'_outra'];A[q.id+'_outra']=o?o.value.trim():''}
+  }
+  function valid(){
+    var q=Q[i],v=A[q.id];
+    if(q.multi&&!v.length)return 'Marque pelo menos uma opção.';
+    if(q.opts&&!q.multi&&!v)return 'Escolha uma opção para continuar.';
+    if(q.other&&v===q.other&&!A[q.id+'_outra'])return 'Conta pra gente qual é.';
+    if(!q.opts&&!q.optional&&v.length<2)return 'Preencha para continuar.';
+    if(q.type==='tel'){var d=v.replace(/\D/g,'');if(d.length<10||d.length>13)return 'Coloque o WhatsApp com DDD, ex.: (51) 99999-9999.'}
+    return '';
+  }
+  function go(dir){
+    if(busy)return;busy=true;
+    var st=form.querySelector('.qz-step');st.classList.add('out');
+    setTimeout(function(){i+=dir;render(dir<0);busy=false},220);
+  }
+  function next(){
+    read();var e=valid();
+    if(e){form.querySelector('.qz-err').textContent=e;return}
+    if(i===Q.length-1)return send();
+    go(1);
+  }
+
+  form.addEventListener('submit',function(e){e.preventDefault();next()});
+  form.addEventListener('change',function(e){
+    var q=Q[i],t=e.target;if(!q.opts||t.name!==q.id)return;
+    read();form.querySelector('.qz-err').textContent='';
+    var ot=form.querySelector('.qz-other');
+    if(q.other){ot.hidden=A[q.id]!==q.other;if(!ot.hidden){ot.querySelector('input').focus();return}}
+    if(q.id==='cidade'){note();if(fora())return}
+    if(!q.multi)setTimeout(function(){if(Q[i]===q&&A[q.id]===t.value)next()},380);
+  });
+  form.addEventListener('input',function(e){if(Q[i].id==='cidade'&&e.target.name==='cidade_outra'){read();note()}});
+  backB.addEventListener('click',function(){if(i>0){read();go(-1)}});
+  document.addEventListener('keydown',function(e){
+    var q=Q[i];if(!q||!q.opts||e.ctrlKey||e.metaKey||e.altKey)return;
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)&&document.activeElement.type==='text')return;
+    var r=quiz.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+    var k=LET.indexOf(e.key.toUpperCase());if(k<0||k>=q.opts.length)return;
+    var inp=form.querySelectorAll('input[name='+q.id+']')[k];if(inp){e.preventDefault();inp.click()}
+  });
+
+  /* botões "Quero o plano" já deixam o plano marcado */
+  var MAP={presenca:Q[9].opts[0],constancia:Q[9].opts[1],referencia:Q[9].opts[2]};
+  [].forEach.call(document.querySelectorAll('[data-plan]'),function(a){a.addEventListener('click',function(){A.plano=MAP[a.getAttribute('data-plan')]})});
+
+  function score(){
+    var s=0;
+    Object.keys(PTS).forEach(function(k){
+      var p=PTS[k],v=A[k];
+      if(Array.isArray(p)){var q=Q.filter(function(x){return x.id===k})[0];var idx=q.opts.indexOf(v);if(idx>=0)s+=p[idx]}
+      else s+=p[v]||0;
+    });
+    return s;
+  }
+  function send(){
+    var s=score(),f=fora(),tier=f?'F':s>=13?'A':s>=8?'B':'C';
+    var u={};location.search.slice(1).split('&').forEach(function(p){var kv=p.split('=');if(/^(utm_|fbclid)/.test(kv[0]))u[kv[0]]=decodeURIComponent(kv[1]||'')});
+    var ig=A.instagram?(A.instagram.charAt(0)==='@'?A.instagram:'@'+A.instagram):'não tem';
+    var seg=A.segmento==='Outro'?A.segmento_outra:A.segmento;
+    var msg='Olá! Vim pela página da Leivas Lab e quero conversar.\n\n'+
+      '*Nome:* '+A.nome+'\n*Empresa:* '+A.empresa+' ('+seg+')\n*Cidade:* '+cidade()+'\n*Instagram:* '+ig+'\n*WhatsApp:* '+A.whatsapp+'\n\n'+
+      '*Espaço para gravar:* '+A.espaco+'\n*Tempo de empresa:* '+A.tempo+'\n*Equipe:* '+A.equipe+'\n'+
+      '*Instagram hoje:* '+A.insta+'\n*Quem cuida:* '+A.quem+'\n*Objetivo:* '+A.objetivo.join(', ')+'\n*Aparecer nos vídeos:* '+A.aparecer+'\n\n'+
+      '*Plano de interesse:* '+A.plano+'\n*Quem decide:* '+A.decisor+'\n*Quando começar:* '+A.quando+'\n\nRef. '+tier+s+(u.utm_campaign?' · '+u.utm_campaign:'');
+    var wa=(CFG.whatsapp||'').replace(/\D/g,'');
+    if(!wa&&!CFG.webhook){say('Envio ainda não configurado: falta o número do WhatsApp da Leivas Lab.');return}
+    if(CFG.webhook){
+      var data={};for(var k in A)data[k]=A[k];data.cidade_final=cidade();data.segmento_final=seg;data.pontuacao=s;data.classificacao=tier;data.fora_da_area=f;data.utm=u;data.pagina=location.href;data.data=new Date().toISOString();
+      try{fetch(CFG.webhook,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(data),keepalive:true})}catch(e){}
+    }
+    if(window.fbq)try{fbq('track','Lead',{content_name:A.plano,lead_tier:tier})}catch(e){}
+    if(wa)window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank','noopener');
+    bar.style.width='100%';
+    quiz.hidden=true;
+    document.getElementById('okMsg').textContent=f?
+      'Obrigado, '+A.nome.split(' ')[0]+'! Ainda não chegamos em '+cidade()+', mas você está na nossa lista.':
+      'Recebido, '+A.nome.split(' ')[0]+'! Vamos falar com você em breve.';
+    document.getElementById('okSub').textContent=wa?'Se o WhatsApp não abriu sozinho, toque aqui: ':'';
+    var l=document.getElementById('okLink');if(wa){l.href='https://wa.me/'+wa+'?text='+encodeURIComponent(msg);l.hidden=false}
+    ok.classList.add('on');
+  }
+  render();
+})();
+</script>
 <script>
 /* ===== v4 · camada de animações ===== */
 (function(){
@@ -1075,7 +1228,7 @@ footer{background:var(--olive-dd);color:var(--paper);padding-block:clamp(48px,6v
   /* títulos das seções */
   $$('main h2.serif, .metodo p.serif, .f-end .fr').forEach(function(h){split(h);io.observe(h)});
   rv('.label');
-  rv('.prob .assets-t, .sol .lead, .cases .sub, .planos .sub, .lab .head p, .final p.s, .form, .case .hd2, .metodo .wrap > p:not(.serif), .incl');
+  rv('.prob .assets-t, .sol .lead, .cases .sub, .planos .sub, .lab .head p, .final p.s, .quiz, .case .hd2, .metodo .wrap > p:not(.serif), .incl');
   group('.pains','.pain','left');
   group('.assets','li','pop',90,3);
   rv('.enter p','wipe');
